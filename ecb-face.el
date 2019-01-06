@@ -53,7 +53,7 @@
 
 (defgroup ecb-faces nil
   "Definitions of all ECB-faces"
-  :group 'ecb-face-options 
+  :group 'ecb-face-options
   :group 'faces
   :prefix "ecb-")
 
@@ -130,6 +130,7 @@ the basic face-settings can be easily changed just by customizing the face
 
 (defcustom ecb-tree-guide-line-face 'ecb-tree-guide-line-face
   "*Face for the guide-lines in the tree-buffers."
+  :type 'face
   :group 'ecb-face-options)
 
 (defface ecb-directories-general-face (ecb-face-default 1.0 nil nil
@@ -287,7 +288,7 @@ buckets in the ECB-history-buffer should be displayed with the same basic
 attributes set by 'ecb-history-general-face' this set of basic attributes have
 to be set in 'ecb-history-indirect-buffer-face' too!"
   :group 'ecb-faces)
- 
+
 (defcustom ecb-history-indirect-buffer-face 'ecb-history-indirect-buffer-face
   "*Face for indirect buffers in the history buffer."
   :group 'ecb-history
@@ -312,7 +313,7 @@ buckets in the ECB-history-buffer should be displayed with the same basic
 attributes set by 'ecb-history-general-face' this set of basic attributes have
 to be set in 'ecb-history-dead-buffer-face' too!"
   :group 'ecb-faces)
- 
+
 (defcustom ecb-history-dead-buffer-face 'ecb-history-dead-buffer-face
   "*Face for history entries pointing to dead buffers."
   :group 'ecb-history
@@ -569,7 +570,7 @@ symbol or font-lock-variable-name-face for a variable symbol)."
                        :value use-font-lock-face)
                 (face :tag "Use face"
                       :value ecb-symboldef-symbol-face)))
-  
+
 (defface ecb-symboldef-prototype-face (ecb-face-default nil t nil
                                                         'ecb-default-general-face)
   "*Define face used for the prototype of symbol in the symboldef-buffer.
@@ -602,7 +603,7 @@ language)."
 The tag header is the first line of the tag which is highlighted after
 jumping to it by clicking onto a node in the methods buffer."
   :group 'ecb-faces)
-  
+
 (defcustom ecb-tag-header-face 'ecb-tag-header-face
   "*Face used for highlighting the tag header.
 The tag header is the first line of the tag which is highlighted after
@@ -619,7 +620,7 @@ jumping to it by clicking onto a node in the methods buffer."
                                                                  nil "gray")
   "*Define a face for displaying sources in the directories buffer."
   :group 'ecb-faces)
- 
+
 (defcustom ecb-source-in-directories-buffer-face 'ecb-source-in-directories-buffer-face
   "*Face for source files in the directories buffer."
   :group 'ecb-directories
@@ -630,7 +631,7 @@ jumping to it by clicking onto a node in the methods buffer."
                                                      'ecb-default-general-face)
   "*Define a face for displaying read-only sources."
   :group 'ecb-faces)
- 
+
 (defcustom ecb-source-read-only-face 'ecb-source-read-only-face
   "*Face for read-only sources."
   :group 'ecb-sources
@@ -646,7 +647,7 @@ jumping to it by clicking onto a node in the methods buffer."
                                                              nil "gray60")
   "*Define a face for displaying not accessible dirs in the directories buffer."
   :group 'ecb-faces)
- 
+
 (defcustom ecb-directory-not-accessible-face 'ecb-directory-not-accessible-face
   "*Face for not accessible dirs in the directories buffer."
   :group 'ecb-directories

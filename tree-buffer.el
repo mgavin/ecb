@@ -191,7 +191,7 @@ This function returns a timer object which you can use in
       (defalias 'tree-buffer-cancel-timer 'cancel-timer)
     (defun tree-buffer-cancel-timer (timer)
       "Remove TIMER from the list of active timers."
-      (delete-itimer timer))))  
+      (delete-itimer timer))))
 
 
 ;; basic utilities
@@ -253,7 +253,7 @@ compare ITEM with the elements of SEQ."
     (if (> (length seq) 0)
         (aref seq 0)
       nil)))
-  
+
 
 (defun tree-buffer-set-elt (seq n val)
   "Set VAL as new N-th element of SEQ. SEQ can be any sequence. SEQ will be
@@ -620,7 +620,7 @@ etc. The search is done by a depth-first-search."
 ;;       (message (tree-node->name (tree-node-search-subtree-by-id
 ;;                                  (tree-buffer-get-root)
 ;;                                  id))))))
-    
+
 (defun tree-node-map-subtree (start-node map-fcn)
   "Apply MAP-FCN to full subtree of START-NODE and make a list of the results.
 MAP-FCN is a function which gets a node of this subtree as argument.
@@ -838,10 +838,10 @@ the header-line of the tree-buffer.")
   (tree-indent nil :read-only t)
   (menu-creator nil :read-only t)
   (menu-titles nil :read-only t)
-  (modeline-menu-creator :read-only t)
-  (sticky-parent-p :read-only t)
-  (sticky-indent-string :read-only t)
-  (sticky-parent-fn :read-only t)
+  (modeline-menu-creator nil :read-only t)
+  (sticky-parent-p nil :read-only t)
+  (sticky-indent-string nil :read-only t)
+  (sticky-parent-fn nil :read-only t)
   (type-facer nil :read-only t)
   (expand-symbol-before-p nil :read-only t)
   (mouse-action-trigger nil :read-only t)
@@ -858,7 +858,7 @@ the header-line of the tree-buffer.")
   (general-face nil :read-only t)
   (incr-search-additional-pattern nil :read-only t)
   (incr-search-p nil :read-only t)
-  (reduce-tree-for-incr-search-fn :read-only t)
+  (reduce-tree-for-incr-search-fn nil :read-only t)
   (hor-scroll-step nil :read-only t)
   (default-images-dir nil :read-only t)
   (additional-images-dir nil :read-only t)
@@ -958,7 +958,7 @@ See `tree-buffer-create' for a description of the arguments."
                                     tree-indent)))
                            :ascii-guide-face ascii-guide-face)))
 
-;; incremental search in a tree-buffer 
+;; incremental search in a tree-buffer
 
 (defconst tree-buffer-incr-searchpattern-expand-prefix
   "\\(\\[[^][]+\\] ?\\)?\\[?"
@@ -1043,12 +1043,12 @@ buffer and evaluate it:
 
 \(progn
   \(pop-to-buffer \(get-buffer-create \"*test*\"))
-  \(let \(\(str1 \"abc\") 
-        \(str2 \"def\") 
-        \(glyph1 \(make-glyph \"X\")) 
-        \(glyph2 \(make-glyph \"Y\"))) 
-    \(add-text-properties 0 3 `\(end-glyph ,glyph1 invisible t) str1) 
-    \(add-text-properties 0 3 `\(end-glyph ,glyph2 invisible t) str2) 
+  \(let \(\(str1 \"abc\")
+        \(str2 \"def\")
+        \(glyph1 \(make-glyph \"X\"))
+        \(glyph2 \(make-glyph \"Y\")))
+    \(add-text-properties 0 3 `\(end-glyph ,glyph1 invisible t) str1)
+    \(add-text-properties 0 3 `\(end-glyph ,glyph2 invisible t) str2)
     \(insert str1) \(insert str2)))
 
 If the bug is still there then there is only a Y being displayed but the correct
@@ -1274,7 +1274,7 @@ image-object for TREE-IMAGE-NAME."
                  (not (equal 'image (tree-buffer-real-style))))
              2 1)
        0)))
-     
+
 
 (defun tree-buffer-get-node-name-start-point (node)
   "Returns the buffer point where the name of the NODE starts."
@@ -1302,7 +1302,7 @@ image-object for TREE-IMAGE-NAME."
   (when (or (tree-node->expandable node)
             ;; TODO: Klaus Berndl <klaus.berndl@sdm.de>: maybe it would be
             ;; better to handle such nodes as if point can not stay at the
-            ;; empty-symbol... 
+            ;; empty-symbol...
             (member (tree-node->type node)
                     (tree-buffer-spec->maybe-empty-node-types tree-buffer-spec)))
     (let ((start-point (tree-buffer-get-node-name-start-point node))
@@ -1780,7 +1780,7 @@ returned."
                           shrink-token)))))
     (setf (tree-node->displayed-name node) display-name)
     display-name))
-  
+
 (defun tree-buffer-insert-node-display (node &optional no-newline)
   "Insert NODE into the tree-buffer with all necessary buttons before or after
 the name of the NODE. This function computes also the name how the NODE has to
@@ -1809,7 +1809,7 @@ newline is inserted after the node."
                                             node)))))
     (when (and (tree-buffer-spec->expand-symbol-before-p tree-buffer-spec)
 	       ascii-symbol tree-image-name)
-      (tree-buffer-insert-text 
+      (tree-buffer-insert-text
        (tree-buffer-add-image-icon-maybe
         0 (length ascii-symbol)
         ascii-symbol (tree-buffer-find-image tree-image-name))
@@ -1890,7 +1890,7 @@ end-guide."
   ;; the node to the `tree-buffer-displayed-nodes'
   (tree-buffer-insert-node-display node)
   (tree-buffer-add-to-displayed-nodes node)
-  
+
   ;; compute the indentation-strings for the children and run recursive for
   ;; each child
   (when (tree-node->expanded node)
@@ -1990,7 +1990,7 @@ is called after updating all needed nodes."
         ;; There is no need to update the displayed-node list because we have
         ;; already updated the node-object and this node-object is part of the
         ;; displayed-node list ==> this list is automatically up-to-date now.
-        
+
         ;; rehighlight here the current highlighted node again - this is
         ;; necessary if we have unpdated and redisplayed the currently
         ;; highlighted node. For this check we have to compare the
@@ -2649,7 +2649,7 @@ functionality is done with the `help-echo'-property and the function
                      node 0 nil
                      nil nil (buffer-name)))
           (tree-node-toggle-expanded node))
-	;; Update the tree-buffer with optimized display of NODE           
+	;; Update the tree-buffer with optimized display of NODE
 	(tree-buffer-update node)))))
 
 (defun tree-buffer-arrow-pressed ()
@@ -2712,7 +2712,7 @@ functionality is done with the `help-echo'-property and the function
 		     (eq scrollpos t))
 		 (let ((w (when (boundp 'scroll-bar-width)
 			    (symbol-value 'scroll-bar-width))))
-		 
+
 		   (if (not w)
 		       (setq w (frame-parameter (selected-frame)
 						'scroll-bar-width)))
@@ -3108,7 +3108,7 @@ TREE-STYLE: There are three different styles available:
             image-icons are used to display the tree-buffer. For this style
             the arguments TREE-INDENT and EXPAND-SYMBOL-BEFORE-P have no
             effect!
-            
+
             Ascii-style with guide-lines \(value 'ascii-guides):
             \[-] ECB
              |  \[+] code-save
@@ -3125,7 +3125,7 @@ TREE-STYLE: There are three different styles available:
                  |  \[x] history
                  |  \[x] methods
                  `- \[x] sources
-            
+
             Ascii-style without guide-lines \(value 'ascii-no-guides):
             \[-] ECB
                 \[+] code-save
@@ -3142,7 +3142,7 @@ TREE-STYLE: There are three different styles available:
                     \[x] history
                     \[x] methods
                     \[x] sources
-            
+
             Both ascii-styles are affected by the args TREE-INDENT and
             EXPAND-SYMBOL-BEFORE-P..
 ASCII-GUIDE-FACE: If TREE-STYLE is 'ascii-guides then this defines the face
@@ -3182,7 +3182,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
                                              'button-press)
                                       'button-release
                                     'button-press)))
-        
+
     (set-buffer (get-buffer-create name))
 
     (make-local-variable 'truncate-lines)
@@ -3205,7 +3205,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
 
     (make-local-variable 'tree-buffer-displayed-nodes)
     (tree-buffer-initialize-displayed-nodes)
-    
+
     (make-local-variable 'tree-buffer-spec)
     (setq tree-buffer-spec
           (tree-buffer-spec-new :tree-indent tree-indent
@@ -3257,12 +3257,12 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
     (tree-buffer-overlay-put tree-buffer-general-overlay 'face
                              general-face)
 
-  
+
     (make-local-variable 'tree-buffer-highlighted-node)
     (setq tree-buffer-highlighted-node nil)
     (make-local-variable 'tree-buffer-hscroll-number)
     (setq tree-buffer-hscroll-number 0)
-    
+
     ;; initialize the user-data-storage for this tree-buffer.
     (set (make-local-variable 'tree-buffer-data-store) nil)
     ;; initialize the local image-cache for this tree-buffer
@@ -3270,7 +3270,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
 
     ;; set a special syntax table for tree-buffers
     (set-syntax-table tree-buffer-syntax-table)
-    
+
     ;; keyboard setting
     (when incr-search-p
       ;; settings for the incremental search.
@@ -3288,7 +3288,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
         'tree-buffer-incremental-node-search)
       (define-key tree-buffer-key-map [end]
         'tree-buffer-incremental-node-search))
-    
+
     (define-key tree-buffer-key-map (kbd "<RET>")
       (function (lambda ()
                   (interactive)
@@ -3309,7 +3309,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
       (function (lambda ()
                   (interactive)
                   (tree-buffer-select 0 '(shift control)))))
-    
+
     (define-key tree-buffer-key-map (kbd "TAB") 'tree-buffer-tab-pressed)
 
     (when arrow-navigation
@@ -3317,7 +3317,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
       (define-key tree-buffer-key-map (kbd "<down>") 'tree-buffer-arrow-pressed)
       (define-key tree-buffer-key-map (kbd "<right>") 'tree-buffer-arrow-pressed)
       (define-key tree-buffer-key-map (kbd "<left>") 'tree-buffer-arrow-pressed))
-    
+
     (define-key tree-buffer-key-map (kbd "M-m")
       'tree-buffer-show-node-menu-keyboard)
 
@@ -3384,7 +3384,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
         (tbc-define-mouse-key-1/2-header 1 'shift)
         (tbc-define-mouse-key-1/2-header 1 'control)
         (tbc-define-mouse-key-1/2-header 1 'meta)
-        
+
         ;; mouse-2 header-line
         (tbc-define-mouse-key-1/2-header 2 nil)
         (tbc-define-mouse-key-1/2-header 2 'shift)
@@ -3392,7 +3392,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
         (tbc-define-mouse-key-1/2-header 2 'meta)
         )
       )
-    
+
     ;; mouse-3 - here we use hard button-press because this is consitent to
     ;; standard popup-behavior of (X)Emacs
     (define-key tree-buffer-key-map
@@ -3434,7 +3434,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
     (define-key tree-buffer-key-map [triple-mouse-3] nop)
 
     ;; modeline bindings....here we use hard coded button-press too - s.a.
-    
+
     (if tree-buffer-running-xemacs
         (progn
           (set (make-local-variable 'modeline-map)
@@ -3461,7 +3461,7 @@ See Info node `(ecb)tree-buffer' for all details of using tree-buffers."
                     (interactive "e")
                     (tree-buffer-mouse-set-point e)
                     (tree-buffer-show-modeline-menu e)))))
-    
+
     ;; scrolling horiz.
     (when (and (not tree-buffer-running-xemacs) hor-scroll-step)
       ;; This lets the GNU Emacs user scroll as if we had a horiz.
